@@ -79,28 +79,28 @@
         <div class="main">
             <main class="content py-2">
                 <div class="container-fluid">
-                    <div class="mb-3">                    
-                            <div id="main" class="border rounded p-3">
-                                <canvas width="1000" height="800" id="drawing" style="position: relative; top:0px; left:0px;">
+                    <div class="mb-3">
+                        <div id="main" class="border rounded p-3">
+                                <canvas width="1000" height="800" id="drawing" style="position: relative; top: 0px; left: 0px;">
                                     Your browser must be very old. It provides no canvas support.
-                                </canvas>
-                                <ul id="menu_execucao" class="d-flex justify-content-start align-items-center mt-3" style="display: none;">
-                                    <li>
-                                        <img onclick="executarPassoAnterior()" src="images/previous.png" style="width: 24px;" title="Previous" />
-                                    </li>
-                                    <li>
-                                        <img onclick="executarProximoPasso()" src="images/next.png" style="width: 24px;" title="Next" />
-                                    </li>
-                                    <li>
-                                        <button type="button" id="btn_ver_resultado" class="btn btn-outline-primary" onclick="executarFinal()" disabled>Ver resultado</button>
-                                    </li>
-                                    <li>
-                                        <button type="button" id="btn_finalizar" class="btn btn-outline-dark" onclick="limpaValoresEQuebras()" disabled>Limpiar valores</button>
-                                    </li>
-                                </ul>
                             </div>
+                            <ul id="menu_execucao" class="d-flex justify-content-start align-items-center mt-3" style="display: none;">
+                                <li>
+                                    <img onclick="executarPassoAnterior()" src="images/previous.png" class="img-fluid" style="width: 24px;" title="Previous" />
+                                </li>
+                                <li>
+                                    <img onclick="executarProximoPasso()" src="images/next.png" class="img-fluid" style="width: 24px;" title="Next" />
+                                </li>
+                                <li>
+                                    <button type="button" id="btn_ver_resultado" class="btn btn-outline-primary" onclick="executarFinal()" disabled>Ver resultado</button>
+                                </li>
+                                <li>
+                                    <button type="button" id="btn_finalizar" class="btn btn-outline-dark" onclick="limpaValoresEQuebras()" disabled>Limpiar valores</button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                </div>
             </main>
         </div>
     </div>
