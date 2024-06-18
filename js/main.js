@@ -18,6 +18,20 @@ Array.prototype.add = function(object) {
 	}
 };
 
+function activarBotones() {
+    document.getElementById('btn_ver_resultado').disabled = false;
+    document.getElementById('btn_finalizar').disabled = false;
+}
+
+// Función para desactivar los botones
+function desactivarBotones() {
+    document.getElementById('btn_ver_resultado').disabled = true;
+    document.getElementById('btn_finalizar').disabled = true;
+}
+
+function reloadPage() {
+    window.location.reload();
+}
 Array.prototype.remove = function(from, to) {
 	var rest = this.slice((to || from) + 1 || this.length);
 	this.length = from < 0 ? this.length + from : from;
@@ -80,6 +94,7 @@ function init() {
 
 	// desenha a tela
 	tela.draw();
+	activarBotones();
 }
 
 function ckmouse(e) {
@@ -147,10 +162,28 @@ function Nodo() {
 	this.x;
 	this.y;
 	this.nivel;
+	this.alpha = -Infinity; // Inicializa alpha como -Infinity
+    this.beta = Infinity;   // Inicializa beta como Infinity
 
 	this.draw = drawNodo;
 
 	obterPK(this);
+}
+
+Nodo.prototype.setAlpha = function(value) {
+    this.alpha = value;
+}
+
+Nodo.prototype.getAlpha = function() {
+    return this.alpha;
+}
+
+Nodo.prototype.setBeta = function(value) {
+    this.beta = value;
+}
+
+Nodo.prototype.getBeta = function() {
+    return this.beta;
 }
 
 function obterPK(objeto) {
@@ -309,13 +342,13 @@ function reorganizaNew() {
 function editar (pkNodo) {
 	var nodo = findByPK(pkNodo);
 	if (nodo == null) {
-		alert("Node does not exist.");
+		alert("Nodo no existe.");
 		return false;
 	}
-	var valor = prompt("Type a number:");
+	var valor = prompt("Ingrese un numero:");
 	
 	if (!isNumber(valor)) {
-		alert("That is not a number.");
+		alert("No es un numero.");
 		return;
 	}
 	nodo.valor = valor;
@@ -516,6 +549,9 @@ function minimax(nodo) {
 	execucao.add(getEstadoAtual(nodo));
 	focoExecucao[focoExecucao.length-1] = focoExecucao[focoExecucao.length-1].pai;
 }
+
+
+
 
 function criaPoda() {
 	if (folhasPreenchidas()){
@@ -726,6 +762,7 @@ function drawNodo(color) {
 	}
 }
 
+
 function excluirTudo() {
 	limpaValoresEQuebras();
 	nodos.remove(1, nodos.length-1);
@@ -811,22 +848,22 @@ function gerarExemplo() {
 	adicionarFilho(15);
 
 
-	nodos[15].valor = 8;
+	nodos[15].valor = 2;
 	nodos[16].valor = 23;
-	nodos[17].valor = -47;
+	nodos[17].valor = -37;
 	nodos[18].valor = 28;
-	nodos[19].valor = -30;
-	nodos[20].valor = -37;
-	nodos[21].valor = 3;
-	nodos[22].valor = -41;
-	nodos[23].valor = -19;
-	nodos[24].valor = 4;
-	nodos[25].valor = -49;
-	nodos[26].valor = 4;
-	nodos[27].valor = 43;
-	nodos[28].valor = 45;
-	nodos[29].valor = -26;
-	nodos[30].valor = -14;
+	nodos[19].valor = -34;
+	nodos[20].valor = 53;
+	nodos[21].valor = 23;
+	nodos[22].valor = -53;
+	nodos[23].valor = -5;
+	nodos[24].valor = -4;
+	nodos[25].valor = 46;
+	nodos[26].valor = 40;
+	nodos[27].valor = 1;
+	nodos[28].valor = -45;
+	nodos[29].valor = -41;
+	nodos[30].valor = 9;
 
 	tela.draw();
 }
