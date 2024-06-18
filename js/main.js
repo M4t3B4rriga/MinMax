@@ -151,8 +151,8 @@ function ckmouse(e) {
     $('#main').append($('#divOpcoes'));
 
     // Calcula las posiciones adecuadas
-    var menuLeft = e.pageX + 10; // Agregamos 10px para ajuste
-    var menuTop = e.pageY + 10; // Agregamos 10px para ajuste
+    var menuLeft = e.pageX + 20; // Agregamos 10px para ajuste
+    var menuTop = e.pageY + 20; // Agregamos 10px para ajuste
 
     // Ajusta la posición del menú
     $('#divOpcoes').css({
@@ -229,8 +229,8 @@ function adicionarFilho(pkPai) {
 	var temp = nodo.y;
 	if (nodo.nivel > 7) {
 		if ((temp+50) > height) {
-			t.height = temp+50;
-			tela.altura = temp+50;
+			t.height = temp+80;
+			tela.altura = temp+80;
 		}
 	}
 
@@ -721,7 +721,7 @@ function drawTela(nodoList) {
 	for (var i = 0; i <= maxNivel; i++) {
 		context.fillStyle = "rgba(200,200,200, 0.4)";
 		context.strokeStyle = "rgba(200,200,200, 0.4);"
-		context.font = "bold 22px 'Arial'";
+		context.font = "bold 12px 'Arial'";
 		
 		var str = new String(this.valor);
 		
