@@ -1,5 +1,42 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
+body {
+    display: flex;
+}
+#sidebar {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    overflow-y: auto;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+.content {
+    margin-left: 270px;
+    padding: 20px;
+}
+.sidebar-logo a {
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+}
+.sidebar-nav {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar-nav li {
+    margin: 10px 0;
+}
+.sidebar-link {
+    text-decoration: none;
+    color: #333;
+}
+.sidebar-header {
+    font-size: 18px;
+    font-weight: bold;
+}
+
 *,
 ::after,
 ::before {
