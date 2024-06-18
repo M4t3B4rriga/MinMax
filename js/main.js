@@ -102,7 +102,7 @@ function ckmouse(e) {
 	divOpcoes.innerHTML = "";
 	
 	var div = document.createElement('div');
-	div.innerHTML = "Add Filho";
+	div.innerHTML = "Añadir nodo";
 	$(div).bind('click', function(){
 		$(divOpcoes).hide();
 		adicionarFilho(nodo.pk);
@@ -111,7 +111,7 @@ function ckmouse(e) {
 	
 	if (nodo.filhos.isEmpty()) {
 		div = document.createElement('div');
-		div.innerHTML = "Editar Valor";
+		div.innerHTML = "Editar valor";
 		$(div).bind('click', function(){
 			$(divOpcoes).hide();
 			editar(nodo.pk);
@@ -121,7 +121,7 @@ function ckmouse(e) {
 	
 	if (nodo.pk != raiz.pk) {
 		div = document.createElement('div');
-		div.innerHTML = "Excluir Nodo";
+		div.innerHTML = "Eliminar Nodo";
 		$(div).bind('click', function(){
 			$(divOpcoes).hide();
 			excluirNodo(nodo.pk, true);
@@ -170,7 +170,7 @@ function adicionarFilho(pkPai) {
 	var pai = findByPK(pkPai);
 	if (pai == null) {
 		// TODO erro
-		alert("Erro");
+		alert("Error");
 		return false;
 	}
 	var nodo = new Nodo();
