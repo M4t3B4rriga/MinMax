@@ -66,3 +66,25 @@
 #menu_execucao button {
     margin-left: 10px;
 }
+
+#divOpcoes {
+    display: none;
+    position: absolute;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 5px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    z-index: 100; /* Asegura que esté por encima de otros elementos */
+}
+
+#divOpcoes div {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+#divOpcoes div:hover {
+    background-color: #f0f0f0;
+}
+
+
+

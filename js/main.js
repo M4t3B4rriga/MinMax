@@ -97,6 +97,8 @@ function init() {
 	activarBotones();
 }
 
+
+
 function ckmouse(e) {
 	
 	$(divOpcoes).hide();
@@ -145,10 +147,18 @@ function ckmouse(e) {
 	}
 		
 	$("#main").append(divOpcoes);
-	$(divOpcoes).css('position', 'absolute');
-	$(divOpcoes).css('left', e.offsetX + 'px');
-	$(divOpcoes).css('top', e.offsetY + 'px');
-	$(divOpcoes).show();
+	// Asegura que #divOpcoes esté dentro de #main para posicionar correctamente
+    $('#main').append($('#divOpcoes'));
+
+    // Calcula las posiciones adecuadas
+    var menuLeft = e.pageX + 10; // Agregamos 10px para ajuste
+    var menuTop = e.pageY + 10; // Agregamos 10px para ajuste
+
+    // Ajusta la posición del menú
+    $('#divOpcoes').css({
+        'left': menuLeft + 'px',
+        'top': menuTop + 'px'
+    }).show();
 	
 }
 
