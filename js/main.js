@@ -1,4 +1,3 @@
-
 Array.prototype.contains = function(object) {
 	for(i = 0; i < this.length; i++){
 		if(this[i] == object){
@@ -56,35 +55,35 @@ function isNumber(n) {
 }
 
 
-var sequence = 0;
+var secuencia = 0;
 var raiz;
 var nodos = new Array();
 var canvas;
 var context;
-var tela;
-var divOpcoes;
-var divOpcoesAberta = false;
+var pantalla;
+var divOpciones;
+var divOpcionesAbiertas = false;
 var clickLiberado = false;
 
-var execucao = new Array();
-var focoExecucao = new Array();
+var ejecucion = new Array();
+var focoEjecucion = new Array();
 
 function init() {
-	// cria tela
-	tela = new Tela(1000, 600);
+	// crear pantalla
+	pantalla = new pantalla(1000, 600);
 
-	// cria nodo raiz
+	// crear nodo raiz
 	raiz = new Nodo();
-	raiz.x = (tela.largura - larguraNodo) / 2;
+	raiz.x = (pantalla.ancho - anchoNodo) / 2;
 	raiz.y = 50;
 	raiz.nivel = 0;
-	raiz.y = raiz.nivel * (alturaNodo + espacoNivel) + 50;
+	raiz.y = raiz.nivel * (alturaNodo + espacioNivel) + 50;
 
 	// adiciona raiz à lista de nodos
 	nodos.add(raiz);
 	
-	divOpcoes = document.createElement('div');
-	divOpcoes.id = "divOpcoes";
+	divOpciones = document.createElement('div');
+	divOpciones.id = "divOpciones";
 
 	// sei la o q ... canvas
 	canvas = document.getElementById('drawing');
@@ -92,8 +91,8 @@ function init() {
 	
 	canvas.addEventListener('mousedown', ckmouse, false);
 
-	// desenha a tela
-	tela.draw();
+	// desenha a pantalla
+	pantalla.draw();
 	activarBotones();
 }
 
@@ -101,11 +100,11 @@ function init() {
 
 function ckmouse(e) {
 	
-	$(divOpcoes).hide();
+	$(divOpciones).hide();
 
 	var nodo = null;
 	for (var i = 0; i < nodos.length; i++) {
-		if (isInCircle(e.offsetX, e.offsetY, nodos[i].x, nodos[i].y, larguraNodo / 2)) {
+		if (isInCircle(e.offsetX, e.offsetY, nodos[i].x, nodos[i].y, anchoNodo / 2)) {
 			//alert(e.offsetX + " | " + e.offsetY);
 			nodo = nodos[i];
 			break;
@@ -116,46 +115,46 @@ function ckmouse(e) {
 		return;
 	}
 	
-	divOpcoes.innerHTML = "";
+	divOpciones.innerHTML = "";
 	
 	var div = document.createElement('div');
 	div.innerHTML = "Añadir nodo";
 	$(div).bind('click', function(){
-		$(divOpcoes).hide();
-		adicionarFilho(nodo.pk);
+		$(divOpciones).hide();
+		agregarHijo(nodo.pk);
 	});
-	$(divOpcoes).append(div);
+	$(divOpciones).append(div);
 	
-	if (nodo.filhos.isEmpty()) {
+	if (nodo.hijo.isEmpty()) {
 		div = document.createElement('div');
 		div.innerHTML = "Editar valor";
 		$(div).bind('click', function(){
-			$(divOpcoes).hide();
+			$(divOpciones).hide();
 			editar(nodo.pk);
 		});
-		$(divOpcoes).append(div);
+		$(divOpciones).append(div);
 	}
 	
 	if (nodo.pk != raiz.pk) {
 		div = document.createElement('div');
 		div.innerHTML = "Eliminar Nodo";
 		$(div).bind('click', function(){
-			$(divOpcoes).hide();
+			$(divOpciones).hide();
 			excluirNodo(nodo.pk, true);
 		});
-		$(divOpcoes).append(div);
+		$(divOpciones).append(div);
 	}
 		
-	$("#main").append(divOpcoes);
-	// Asegura que #divOpcoes esté dentro de #main para posicionar correctamente
-    $('#main').append($('#divOpcoes'));
+	$("#main").append(divOpciones);
+	// Asegura que #divOpciones esté dentro de #main para posicionar correctamente
+    $('#main').append($('#divOpciones'));
 
     // Calcula las posiciones adecuadas
     var menuLeft = e.pageX + 20; // Agregamos 10px para ajuste
     var menuTop = e.pageY + 20; // Agregamos 10px para ajuste
 
     // Ajusta la posición del menú
-    $('#divOpcoes').css({
+    $('#divOpciones').css({
         'left': menuLeft + 'px',
         'top': menuTop + 'px'
     }).show();
@@ -165,9 +164,9 @@ function ckmouse(e) {
 function Nodo() {
 	this.pk;
 	this.valor = null;
-	this.quebra = false;
-	this.pai = null;
-	this.filhos = new Array();
+	this.romper = false;
+	this.padre = null;
+	this.hijo = new Array();
 
 	this.x;
 	this.y;
@@ -197,7 +196,7 @@ Nodo.prototype.getBeta = function() {
 }
 
 function obterPK(objeto) {
-	objeto.pk = ++sequence;
+	objeto.pk = ++secuencia;
 }
 
 function findByPK(pk) {
@@ -209,20 +208,20 @@ function findByPK(pk) {
 	return null;
 }
 
-function adicionarFilho(pkPai) {
-	var pai = findByPK(pkPai);
-	if (pai == null) {
-		// TODO erro
+function agregarHijo(pkpadre) {
+	var padre = findByPK(pkpadre);
+	if (padre == null) {
+		
 		alert("Error");
 		return false;
 	}
 	var nodo = new Nodo();
-	nodo.pai = pai;
-	pai.filhos.add(nodo);
+	nodo.padre = padre;
+	padre.hijo.add(nodo);
 	nodos.add(nodo);
-	nodo.nivel = pai.nivel + 1;
-	nodo.y = nodo.nivel * (alturaNodo + espacoNivel) + 50;
-	pai.valor = null;
+	nodo.nivel = padre.nivel + 1;
+	nodo.y = nodo.nivel * (alturaNodo + espacioNivel) + 50;
+	padre.valor = null;
 
 	var t = document.getElementById('drawing')
 	var height = t.height;
@@ -230,122 +229,116 @@ function adicionarFilho(pkPai) {
 	if (nodo.nivel > 7) {
 		if ((temp+50) > height) {
 			t.height = temp+80;
-			tela.altura = temp+80;
+			pantalla.altura = temp+80;
 		}
 	}
 
-	tela.draw();
+	pantalla.draw();
 }
 
 function reorganiza(nodo) {
 	if (nodo.pk != raiz.pk) {
-		pai = nodo.pai;
-		// se for filho unico, x = x do pai
-		if (pai.filhos.length == 1) {
-			nodo.x = pai.x;
+		padre = nodo.padre;
+		
+		if (padre.hijo.length == 1) {
+			nodo.x = padre.x;
 		} else {
 
 			var posInicial = 0;
-			var quant = pai.filhos.length;
-			var larg = (pai.x + larguraNodo/2) * 2;
+			var cantidad = padre.hijo.length;
+			var larg = (padre.x + anchoNodo/2) * 2;
 
-			// se não for raiz
-			if (pai.pk != 1) {
-				var paiCalculo = pai;
-				while (paiCalculo.pai.filhos.length < 2 && paiCalculo.pai.pai != null) {
-					paiCalculo = paiCalculo.pai;
+			
+			if (padre.pk != 1) {
+				var padreCalculo = padre;
+				while (padreCalculo.padre.hijo.length < 2 && padreCalculo.padre.padre != null) {
+					padreCalculo = padreCalculo.padre;
 				}
 				
-				var pos = paiCalculo.pai.filhos.contains(paiCalculo);
+				var pos = padreCalculo.padre.hijo.contains(padreCalculo);
 				if (pos == 0) {
-					if (paiCalculo.pai.filhos.length > 1) {
-						var paiAnt = paiCalculo.pai.filhos[pos+1];
-						larg = paiAnt.x - paiCalculo.x;
-						posInicial = paiCalculo.x - larg/2 + larguraNodo;
-						larg -= larguraNodo;
+					if (padreCalculo.padre.hijo.length > 1) {
+						var padreAnt = padreCalculo.padre.hijo[pos+1];
+						larg = padreAnt.x - padreCalculo.x;
+						posInicial = padreCalculo.x - larg/2 + anchoNodo;
+						larg -= anchoNodo;
 					}
 				} else {
-					var paiAnt = paiCalculo.pai.filhos[pos-1];
-					larg = paiCalculo.x - paiAnt.x;
-					posInicial = larg/2 + larguraNodo + paiAnt.x;
-					larg -= larguraNodo;
+					var padreAnt = padreCalculo.padre.hijo[pos-1];
+					larg = padreCalculo.x - padreAnt.x;
+					posInicial = larg/2 + anchoNodo + padreAnt.x;
+					larg -= anchoNodo;
 				}
 			}
 
-			var largNodo = larg/quant; // se menor q 50, n deixa add
-			var nodoX = largNodo/2 - larguraNodo/2;
+			var largNodo = larg/cantidad;
+			var nodoX = largNodo/2 - anchoNodo/2;
 			var acum = posInicial;
-			for (var i = 0; i < quant; i++) {
-				pai.filhos[i].x = acum + nodoX;
+			for (var i = 0; i < cantidad; i++) {
+				padre.hijo[i].x = acum + nodoX;
 				acum += largNodo;
 			}
 		}
 	}
 	
-	if (!nodo.filhos.isEmpty()) {
-		for (var i = 0; i < nodo.filhos.length; i++) {
-			reorganiza(nodo.filhos[i]);
+	if (!nodo.hijo.isEmpty()) {
+		for (var i = 0; i < nodo.hijo.length; i++) {
+			reorganiza(nodo.hijo[i]);
 		}
 	}
 }
 
-function calculoPosPai(nivelAtual) {
-	// varre todos os nodos
+function calculoPospadre(nivelActual) {
 	for (var i = 0; i < nodos.length; i++) {
 		var nodo = nodos[i];
-		// se nivel certo e 'x' ainda não definido
-		if (nodo.nivel == nivelAtual - 1 && nodo.x == null) {
-			var quantFilhos = nodo.filhos.length;
-			var menorX = nodo.filhos[0].x;
-			var maiorX = nodo.filhos[quantFilhos-1].x;
+		if (nodo.nivel == nivelActual - 1 && nodo.x == null) {
+			var cantidadhijo = nodo.hijo.length;
+			var menorX = nodo.hijo[0].x;
+			var mayorX = nodo.hijo[cantidadhijo-1].x;
 
-			nodo.x = (menorX + maiorX) / 2;
+			nodo.x = (menorX + mayorX) / 2;
 		}
 	}
 }
 
-function reposicionaFolhas(nodo, folhaAtual, larguraPorNodo) {
-	if (nodo.filhos.isEmpty()) {
-		nodo.x = folhaAtual * larguraPorNodo + larguraPorNodo / 2;
-		folhaAtual++;
+function reposicionaHojas(nodo, hojaActual, anchoPorNodo) {
+	if (nodo.hijo.isEmpty()) {
+		nodo.x = hojaActual * anchoPorNodo + anchoPorNodo / 2;
+		hojaActual++;
 	} else {
-		for (var i = 0; i < nodo.filhos.length; i++) {
-			folhaAtual = reposicionaFolhas(nodo.filhos[i], folhaAtual, larguraPorNodo);
+		for (var i = 0; i < nodo.hijo.length; i++) {
+			hojaActual = reposicionaHojas(nodo.hijo[i], hojaActual, anchoPorNodo);
 		}
 	}
 
-	return folhaAtual;
+	return hojaActual;
 }
 
 function reorganizaNew() {
-	// limpa o x de todos os nodos
 	for (var i = 0; i < nodos.length; i++) {
 		nodos[i].x = null;
 	}
 
-	// obtem quantidade de folhas e maior nivel
-	var quantFolhas = 0;
-	var maiorNivel = 0;
+	var cantidadHojas = 0;
+	var mayorNivel = 0;
 	for (var i = 0; i < nodos.length; i++) {
 		var nodo = nodos[i];
-		if (nodo.filhos.isEmpty()) {
-			quantFolhas++;
-			if (nodo.nivel > maiorNivel) {
-				maiorNivel = nodo.nivel;
+		if (nodo.hijo.isEmpty()) {
+			cantidadHojas++;
+			if (nodo.nivel > mayorNivel) {
+				mayorNivel = nodo.nivel;
 			}
 		}
 	}
 
-	// calcula largura disponível para cada folha
-	var larguraPorNodo = tela.largura / quantFolhas;
+	var anchoPorNodo = pantalla.ancho / cantidadHojas;
 
-	// coloca as folhas no lugar
-	reposicionaFolhas(raiz, 0, larguraPorNodo);
+	reposicionaHojas(raiz, 0, anchoPorNodo);
 
-	nivelAtual = maiorNivel;
-	while (nivelAtual > 0) {
-		calculoPosPai(nivelAtual);
-		nivelAtual--;
+	nivelActual = mayorNivel;
+	while (nivelActual > 0) {
+		calculoPospadre(nivelActual);
+		nivelActual--;
 	}
 }
 
@@ -363,14 +356,14 @@ function editar (pkNodo) {
 	}
 	nodo.valor = valor;
 	
-	tela.draw();
+	pantalla.draw();
 }
 
-function folhasPreenchidas() {
+function HojasCompletas() {
 	for (var i = 0; i < nodos.length; i++) {
 		var nodo = nodos[i];
-		if (nodo.filhos.isEmpty() && nodo.valor == null) {
-			alert("You have to set value to all leaf nodes.");
+		if (nodo.hijo.isEmpty() && nodo.valor == null) {
+			alert("Tienes que establecer valores para todos los nodos hoja.");
 			return false;
 		}
 	}
@@ -379,26 +372,26 @@ function folhasPreenchidas() {
 
 function excluirNodo(pkNodo, alertar) {
 	if (pkNodo == 1) {
-		alert("You can't delete the root node.")
+		alert("No puede eliminar el nodo raíz.")
 		return;
 	}
 
 	var nodo = findByPK(pkNodo);
 	if (nodo == null) {
-		alert("Node doesn't exist.");
+		alert("El nodo no existe.");
 		return false;
 	}
 	
-	if (!nodo.filhos.isEmpty()) {
-		var resposta = true;
+	if (!nodo.hijo.isEmpty()) {
+		var respuesta = true;
 		if (alertar) {
-			resposta = confirm("This node has children. Do you want to kill his kids? :'(");
+			respuesta = confirm("Este nodo es hijo. Desea eliminar sus hijos? :'(");
 		}
-		if (resposta) {
-			while (nodo.filhos.length > 0) {
-				excluirNodo(nodo.filhos[0].pk, false);
+		if (respuesta) {
+			while (nodo.hijo.length > 0) {
+				excluirNodo(nodo.hijo[0].pk, false);
 			}
-			//for (var i = 0; i < nodo.filhos.length; i++) {
+			//for (var i = 0; i < nodo.hijo.length; i++) {
 				
 			//}
 		} else {
@@ -406,71 +399,71 @@ function excluirNodo(pkNodo, alertar) {
 		}
 	}
 
-	if (nodo.pai != null) {
-		var pos = nodo.pai.filhos.contains(nodo);
-		nodo.pai.filhos.remove(pos);
+	if (nodo.padre != null) {
+		var pos = nodo.padre.hijo.contains(nodo);
+		nodo.padre.hijo.remove(pos);
 	}
 
 	var pos = nodos.contains(nodo);
 	nodos.remove(pos);
 
 	if (alertar) {
-		tela.draw();
+		pantalla.draw();
 	}
 }
 
-var execucaoPassoAtual = 0;
-function executarPassoAnterior() {
-	if (execucaoPassoAtual > 0) {
-		execucaoPassoAtual--;
+var ejecucionPasoActual = 0;
+function ejecucionPasoAnterior() {
+	if (ejecucionPasoActual > 0) {
+		ejecucionPasoActual--;
 	}
-	tela.draw(execucao[execucaoPassoAtual]);
-	focoExecucao[execucaoPassoAtual].draw("red");
+	pantalla.draw(ejecucion[ejecucionPasoActual]);
+	focoEjecucion[ejecucionPasoActual].draw("red");
 }
 
-function executarProximoPasso() {
-	if (execucaoPassoAtual < execucao.length - 1) {
-		execucaoPassoAtual++;
+function ejecucionProximoPaso() {
+	if (ejecucionPasoActual < ejecucion.length - 1) {
+		ejecucionPasoActual++;
 	}
-	tela.draw(execucao[execucaoPassoAtual]);
-	focoExecucao[execucaoPassoAtual].draw("red");
+	pantalla.draw(ejecucion[ejecucionPasoActual]);
+	focoEjecucion[ejecucionPasoActual].draw("red");
 }
 
-function executarFinal() {
-	tela.draw();
+function ejecucionFinal() {
+	pantalla.draw();
 }
 
-function finalizarExecucao() {
-	tela.draw();
+function finalizarEjecucion() {
+	pantalla.draw();
 
-	execucaoPassoAtual = 0;
-	execucao = new Array();
-	focoExecucao = new Array();
+	ejecucionPasoActual = 0;
+	ejecucion = new Array();
+	focoEjecucion = new Array();
 
-	$("#menu_execucao").hide();
+	$("#menu_ejecucion").hide();
 	$("#menu_principal").show();
 }
 
-function limpaValoresEQuebras() {
+function limpaValoresPoda() {
 	for (var i = 0; i < nodos.length; i++) {
-		nodos[i].quebra = false;
-		if (!nodos[i].filhos.isEmpty()) {
+		nodos[i].romper = false;
+		if (!nodos[i].hijo.isEmpty()) {
 			nodos[i].valor = null;
 		}
 	}
 
-	tela.draw();
+	pantalla.draw();
 }
 
-function clonaNodo(nodo, newPai) {
+function clonaNodo(nodo, newpadre) {
 	var n = new Nodo();
 	//n.pk = nodo.pk;
 	n.valor = nodo.valor;
-	n.quebra = nodo.quebra;
-	n.pai = newPai;
-	n.filhos = new Array();
-	for (var i = 0; i < nodo.filhos.length; i++) {
-		n.filhos.add(nodo.filhos[i]);
+	n.romper = nodo.romper;
+	n.padre = newpadre;
+	n.hijo = new Array();
+	for (var i = 0; i < nodo.hijo.length; i++) {
+		n.hijo.add(nodo.hijo[i]);
 	}
 
 	n.x = nodo.x;
@@ -480,112 +473,112 @@ function clonaNodo(nodo, newPai) {
 	return n;
 }
 
-function clonaRecursivo(nodo, estado, nodoAtual) {
-	if (nodo.filhos.isEmpty()) {
+function clonaRecursivo(nodo, estado, nodoActual) {
+	if (nodo.hijo.isEmpty()) {
 		return;
 	} else {
-		for (var i = 0; i < nodo.filhos.length; i++) {
-			var novoNodo = clonaNodo(nodo.filhos[i], nodo);
+		for (var i = 0; i < nodo.hijo.length; i++) {
+			var novoNodo = clonaNodo(nodo.hijo[i], nodo);
 			estado.add(novoNodo);
-			clonaRecursivo(novoNodo, estado, nodoAtual);
+			clonaRecursivo(novoNodo, estado, nodoActual);
 
-			if (nodoAtual == nodo.filhos[i]) {
-				focoExecucao.add(novoNodo);
+			if (nodoActual == nodo.hijo[i]) {
+				focoEjecucion.add(novoNodo);
 			}
 
-			nodo.filhos[i] = novoNodo;
+			nodo.hijo[i] = novoNodo;
 		}
 	}
 }
 
-function getEstadoAtual(nodoAtual) {
+function getEstadoActual(nodoActual) {
 	var newRaiz = clonaNodo(raiz, null);
 
-	var estAtual = new Array();
-	estAtual.add(newRaiz);
+	var estActual = new Array();
+	estActual.add(newRaiz);
 
-	if (nodoAtual == raiz) {
-		focoExecucao.add(newRaiz);
+	if (nodoActual == raiz) {
+		focoEjecucion.add(newRaiz);
 	}
 
-	clonaRecursivo(newRaiz, estAtual, nodoAtual);
+	clonaRecursivo(newRaiz, estActual, nodoActual);
 
-	return estAtual;
+	return estActual;
 }
 
-function criaMiniMax() {
-	if (folhasPreenchidas()){
-		limpaValoresEQuebras();
-		execucao = new Array();
-		focoExecucao = new Array();
-		execucaoPassoAtual = 0;
+function crearMiniMax() {
+	if (HojasCompletas()){
+		limpaValoresPoda();
+		ejecucion = new Array();
+		focoEjecucion = new Array();
+		ejecucionPasoActual = 0;
 		minimax(raiz);
-		$("#menu_execucao").show();
+		$("#menu_ejecucion").show();
 		$("#menu_principal").hide();
 	}
 }
 
 function minimax(nodo) {
-	execucao.add(getEstadoAtual(nodo));
+	ejecucion.add(getEstadoActual(nodo));
 
-	if (!nodo.filhos.isEmpty()){
-		for (var i = 0; i < nodo.filhos.length; i++) {
-			console.log("nodo => " + nodo.filhos[i].pk);
-			minimax(nodo.filhos[i]);
+	if (!nodo.hijo.isEmpty()){
+		for (var i = 0; i < nodo.hijo.length; i++) {
+			console.log("nodo => " + nodo.hijo[i].pk);
+			minimax(nodo.hijo[i]);
 		}
 	}
 	if (nodo == raiz) {
 		return;
 	}
-	if (nodo.pai.valor == null) {
-		nodo.pai.valor = nodo.valor;
+	if (nodo.padre.valor == null) {
+		nodo.padre.valor = nodo.valor;
 	} else {
 		var max = false;
 		if (nodo.nivel%2 == 0){
 			max = true;
 		}
 		var valorNodo = Math.floor(nodo.valor);
-		var valorPai = Math.floor(nodo.pai.valor);
+		var valorpadre = Math.floor(nodo.padre.valor);
 		if (max) {
-			if(valorNodo < valorPai){
-				nodo.pai.valor = nodo.valor;
+			if(valorNodo < valorpadre){
+				nodo.padre.valor = nodo.valor;
 			}
 		} else {
-			if(valorNodo > valorPai){
-				nodo.pai.valor = nodo.valor;
+			if(valorNodo > valorpadre){
+				nodo.padre.valor = nodo.valor;
 			}
 		}
 	}
-	execucao.add(getEstadoAtual(nodo));
-	focoExecucao[focoExecucao.length-1] = focoExecucao[focoExecucao.length-1].pai;
+	ejecucion.add(getEstadoActual(nodo));
+	focoEjecucion[focoEjecucion.length-1] = focoEjecucion[focoEjecucion.length-1].padre;
 }
 
 
 
 
-function criaPoda() {
-	if (folhasPreenchidas()){
-		limpaValoresEQuebras();
-		execucao = new Array();
-		focoExecucao = new Array();
-		execucaoPassoAtual = 0;
+function crearPoda() {
+	if (HojasCompletas()){
+		limpaValoresPoda();
+		ejecucion = new Array();
+		focoEjecucion = new Array();
+		ejecucionPasoActual = 0;
 		poda(raiz);
-		$("#menu_execucao").show();
+		$("#menu_ejecucion").show();
 		$("#menu_principal").hide();
 	}
 }
 
 function poda(nodo) {
-	execucao.add(getEstadoAtual(nodo));
-	if (!nodo.filhos.isEmpty()){
-		var quebra = false;
-		for (var i = 0; i < nodo.filhos.length; i++) {
-			console.log("nodo => " + nodo.filhos[i].pk);
+	ejecucion.add(getEstadoActual(nodo));
+	if (!nodo.hijo.isEmpty()){
+		var romper = false;
+		for (var i = 0; i < nodo.hijo.length; i++) {
+			console.log("nodo => " + nodo.hijo[i].pk);
 
-			if (!quebra) {
-				quebra = poda(nodo.filhos[i]);
+			if (!romper) {
+				romper = poda(nodo.hijo[i]);
 			} else {
-				nodo.filhos[i].quebra = true;
+				nodo.hijo[i].romper = true;
 			}
 		}
 	}
@@ -598,57 +591,57 @@ function poda(nodo) {
 		max = true;
 	}
 
-	if (nodo.pai.valor == null) {
-		nodo.pai.valor = nodo.valor;
+	if (nodo.padre.valor == null) {
+		nodo.padre.valor = nodo.valor;
 	} else {
 		var valorNodo = Math.floor(nodo.valor);
-		var valorPai = Math.floor(nodo.pai.valor);
+		var valorpadre = Math.floor(nodo.padre.valor);
 		if (max) {
-			if(valorNodo < valorPai){
-				nodo.pai.valor = nodo.valor;
+			if(valorNodo < valorpadre){
+				nodo.padre.valor = nodo.valor;
 			}
 		} else {
-			if(valorNodo > valorPai){
-				nodo.pai.valor = nodo.valor;
+			if(valorNodo > valorpadre){
+				nodo.padre.valor = nodo.valor;
 			}
 		}
 	}
-	execucao.add(getEstadoAtual(nodo));
-	focoExecucao[focoExecucao.length-1] = focoExecucao[focoExecucao.length-1].pai;
+	ejecucion.add(getEstadoActual(nodo));
+	focoEjecucion[focoEjecucion.length-1] = focoEjecucion[focoEjecucion.length-1].padre;
 
-	return testaPodaPai(nodo, max);
+	return testPodaPadre(nodo, max);
 }
 
-function testaPodaPai(nodo, max) {
+function testPodaPadre(nodo, max) {
 
-	if (nodo.pai == null) {
+	if (nodo.padre == null) {
 		return;
 	}
 
-	var valor = nodo.pai.valor;
-	var quebra = false;
+	var valor = nodo.padre.valor;
+	var romper = false;
 
-	var nodoAux = nodo.pai.pai;
+	var nodoAux = nodo.padre.padre;
 	while (nodoAux != null) {
 		if ((nodoAux.nivel%2 == 0) == max) {
 			if (nodoAux.valor != null) {
 				if (max) {
 					if (Math.floor(valor) <= Math.floor(nodoAux.valor)) {
-						quebra = true;
+						romper = true;
 						break;
 					}
 				} else {
 					if (Math.floor(valor) >= Math.floor(nodoAux.valor)) {
-						quebra = true;
+						romper = true;
 						break;
 					}
 				}
 			}
 		}
-		nodoAux = nodoAux.pai;
+		nodoAux = nodoAux.padre;
 	}
 
-	if (quebra) {
+	if (romper) {
 		console.log(nodo.valor + " | " + nodo.nivel);
 		return true;
 	}
@@ -656,14 +649,14 @@ function testaPodaPai(nodo, max) {
 	return false;
 }
 
-function Tela(largura, altura) {
-	this.largura = largura;
+function pantalla(ancho, altura) {
+	this.ancho = ancho;
 	this.altura = altura;
 
-	this.draw = drawTela;
+	this.draw = drawpantalla;
 }
 
-function drawTela(nodoList) {
+function drawpantalla(nodoList) {
 	if (!nodoList) {
 		nodoList = nodos;
 	}
@@ -673,7 +666,7 @@ function drawTela(nodoList) {
 	context.beginPath();
 
 	context.fillStyle = "white";
-	context.fillRect(0, 0, this.largura, this.altura);
+	context.fillRect(0, 0, this.ancho, this.altura);
 	context.closePath();
 
 	maxNivel = 0;
@@ -685,20 +678,20 @@ function drawTela(nodoList) {
 
 			
 	for(var i = 0; i < nodoList.length; i++){
-		if (nodoList[i].pai != null) {
+		if (nodoList[i].padre != null) {
 			context.beginPath();
 			context.strokeStyle = "black";
 			context.moveTo(nodoList[i].x, nodoList[i].y);
-			context.lineTo(nodoList[i].pai.x, nodoList[i].pai.y);
+			context.lineTo(nodoList[i].padre.x, nodoList[i].padre.y);
 			context.stroke();
 			context.closePath();
 
-			// se nodo possui quebra, desenha o X
-			if (nodoList[i].quebra) {
+			
+			if (nodoList[i].romper) {
 				context.beginPath();
 				context.strokeStyle = "red";
-				var centroX = (Math.floor(nodoList[i].x) + Math.floor(nodoList[i].pai.x)) / 2;
-				var centroY = (Math.floor(nodoList[i].y) + Math.floor(nodoList[i].pai.y)) / 2
+				var centroX = (Math.floor(nodoList[i].x) + Math.floor(nodoList[i].padre.x)) / 2;
+				var centroY = (Math.floor(nodoList[i].y) + Math.floor(nodoList[i].padre.y)) / 2
 				context.moveTo(centroX-10, centroY-10);
 				context.lineTo(centroX+10, centroY+10);
 
@@ -708,7 +701,7 @@ function drawTela(nodoList) {
 				context.closePath();
 			}
 			
-			//context.moveTo(nodoList[i].x + larguraNodo/2,100);
+			//context.moveTo(nodoList[i].x + anchoNodo/2,100);
 			//context.lineTo(200,200);
 		}
 	}
@@ -725,11 +718,11 @@ function drawTela(nodoList) {
 		
 		var str = new String(this.valor);
 		
-		context.fillText((i%2 ? "MIN" : "MAX"), 30, (espacoNivel+alturaNodo) + i*(espacoNivel+alturaNodo) - 17);
-		context.fillText((i%2 ? " MIN" : "MAX"), 926, (espacoNivel+alturaNodo) + i*(espacoNivel+alturaNodo) - 17);
+		context.fillText((i%2 ? "MIN" : "MAX"), 30, (espacioNivel+alturaNodo) + i*(espacioNivel+alturaNodo) - 17);
+		context.fillText((i%2 ? " MIN" : "MAX"), 926, (espacioNivel+alturaNodo) + i*(espacioNivel+alturaNodo) - 17);
 		
-		context.moveTo(30, (espacoNivel+alturaNodo) + i*(espacoNivel+alturaNodo) + 15);
-		context.lineTo(970, (espacoNivel+alturaNodo) + i*(espacoNivel+alturaNodo) + 15);
+		context.moveTo(30, (espacioNivel+alturaNodo) + i*(espacioNivel+alturaNodo) + 15);
+		context.lineTo(970, (espacioNivel+alturaNodo) + i*(espacioNivel+alturaNodo) + 15);
 		context.stroke();
 
 	}
@@ -746,7 +739,7 @@ function drawNodo(color) {
 	}
 	context.fillStyle = firstfill;
 	context.strokeStyle = color;
-	var y = this.nivel * (alturaNodo + espacoNivel) + 50;
+	var y = this.nivel * (alturaNodo + espacioNivel) + 50;
 	context.beginPath();
 	context.arc(this.x, this.y, alturaNodo/2+2, 0, 2 * Math.PI, false);
 	context.fill();
@@ -754,7 +747,7 @@ function drawNodo(color) {
 	
 	context.fillStyle = fillstyle;
 	context.beginPath();
-	//context.strokeRect(this.x, y, larguraNodo, alturaNodo);
+	//context.strokeRect(this.x, y, anchoNodo, alturaNodo);
 	context.arc(this.x, this.y, alturaNodo/2, 0, 2 * Math.PI, false);
 	context.stroke();
 	context.fill();
@@ -773,19 +766,19 @@ function drawNodo(color) {
 }
 
 
-function excluirTudo() {
-	limpaValoresEQuebras();
+function excluirTodo() {
+	limpaValoresPoda();
 	nodos.remove(1, nodos.length-1);
-	nodos[0].x = (tela.largura - larguraNodo) / 2;
+	nodos[0].x = (pantalla.ancho - anchoNodo) / 2;
 	nodos[0].valor = null;
-	nodos[0].filhos = new Array();
-	sequence = 1;
-	var execucao = new Array();
-	var focoExecucao = new Array();
-	execucaoPassoAtual = 0;
+	nodos[0].hijo = new Array();
+	secuencia = 1;
+	var ejecucion = new Array();
+	var focoEjecucion = new Array();
+	ejecucionPasoActual = 0;
 	$("#menu_principal").show();
-	$("#menu_execucao").hide();
-	tela.draw();
+	$("#menu_ejecucion").hide();
+	pantalla.draw();
 }
 
 $("document").ready(function(){
@@ -809,53 +802,53 @@ $("document").ready(function(){
 
     $(document).keydown(function(e){
     	var key = e.which;
-    	if ($("#menu_execucao").css('display') != "none") {
+    	if ($("#menu_ejecucion").css('display') != "none") {
 	    	if (key == 37) {
-	    		executarPassoAnterior();
+	    		ejecucionPasoAnterior();
 	    	} else if (key == 39) {
-	    		executarProximoPasso();
+	    		ejecucionProximoPaso();
 	    	}
 	    }
     });
 
 });
 
-function gerarExemplo() {
-	excluirTudo();
+function generarEjemplo() {
+	excluirTodo();
 
-	adicionarFilho(1);
-	adicionarFilho(1);
+	agregarHijo(1);
+	agregarHijo(1);
 
-	adicionarFilho(2);
-	adicionarFilho(2);
-	adicionarFilho(3);
-	adicionarFilho(3);
+	agregarHijo(2);
+	agregarHijo(2);
+	agregarHijo(3);
+	agregarHijo(3);
 
-	adicionarFilho(4);
-	adicionarFilho(4);
-	adicionarFilho(5);
-	adicionarFilho(5);
-	adicionarFilho(6);
-	adicionarFilho(6);
-	adicionarFilho(7);
-	adicionarFilho(7);
+	agregarHijo(4);
+	agregarHijo(4);
+	agregarHijo(5);
+	agregarHijo(5);
+	agregarHijo(6);
+	agregarHijo(6);
+	agregarHijo(7);
+	agregarHijo(7);
 
-	adicionarFilho(8);
-	adicionarFilho(8);
-	adicionarFilho(9);
-	adicionarFilho(9);
-	adicionarFilho(10);
-	adicionarFilho(10);
-	adicionarFilho(11);
-	adicionarFilho(11);
-	adicionarFilho(12);
-	adicionarFilho(12);
-	adicionarFilho(13);
-	adicionarFilho(13);
-	adicionarFilho(14);
-	adicionarFilho(14);
-	adicionarFilho(15);
-	adicionarFilho(15);
+	agregarHijo(8);
+	agregarHijo(8);
+	agregarHijo(9);
+	agregarHijo(9);
+	agregarHijo(10);
+	agregarHijo(10);
+	agregarHijo(11);
+	agregarHijo(11);
+	agregarHijo(12);
+	agregarHijo(12);
+	agregarHijo(13);
+	agregarHijo(13);
+	agregarHijo(14);
+	agregarHijo(14);
+	agregarHijo(15);
+	agregarHijo(15);
 
 
 	nodos[15].valor = 2;
@@ -875,12 +868,10 @@ function gerarExemplo() {
 	nodos[29].valor = -41;
 	nodos[30].valor = 9;
 
-	tela.draw();
+	pantalla.draw();
 }
 
 
-var larguraNodo = 25;
+var anchoNodo = 25;
 var alturaNodo = 25;
-var espacoNivel = 50
-
-// TODO (ou não) arrastar bolinhas
+var espacioNivel = 50

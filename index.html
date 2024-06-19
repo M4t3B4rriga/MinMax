@@ -34,7 +34,7 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
-                        <a href="#" class="sidebar-link" onclick="gerarExemplo()">
+                        <a href="#" class="sidebar-link" onclick="generarEjemplo()">
                             <i class="fa-solid fa-list pe-2"></i>
                             Generar arbol ejemplo
                         </a>
@@ -47,10 +47,10 @@
                         </a>
                         <ul id="pages" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link" onclick="criaMiniMax()">MiniMax</a>
+                                <a href="#" class="sidebar-link" onclick="crearMiniMax()">MiniMax</a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="#" class="sidebar-link" onclick="criaPoda()">Poda Alpha-Beta</a>
+                                <a href="#" class="sidebar-link" onclick="crearPoda()">Poda Alpha-Beta</a>
                             </li>
                         </ul>
                     </li>
@@ -83,18 +83,18 @@
                                     Your browser must be very old. It provides no canvas support.
                                 </canvas>
                             </div>
-                            <ul id="menu_execucao" class="d-flex justify-content-start align-items-center mt-3" style="display: none;">
+                            <ul id="menu_ejecucion" class="d-flex justify-content-start align-items-center mt-3" style="display: none;">
                                 <li>
-                                    <img onclick="executarPassoAnterior()" src="images/previous.png" class="img-fluid" style="width: 24px;" title="Previous" />
+                                    <img onclick="ejecucionPasoAnterior()" src="images/previous.png" class="img-fluid" style="width: 24px;" title="Previous" />
                                 </li>
                                 <li>
-                                    <img onclick="executarProximoPasso()" src="images/next.png" class="img-fluid" style="width: 24px;" title="Next" />
+                                    <img onclick="ejecucionProximoPaso()" src="images/next.png" class="img-fluid" style="width: 24px;" title="Next" />
                                 </li>
                                 <li>
-                                    <button type="button" id="btn_ver_resultado" class="btn btn-outline-primary" onclick="executarFinal()" disabled>Ver resultado</button>
+                                    <button type="button" id="btn_ver_resultado" class="btn btn-outline-primary" onclick="ejecucionFinal()" disabled>Ver resultado</button>
                                 </li>
                                 <li>
-                                    <button type="button" id="btn_finalizar" class="btn btn-outline-dark" onclick="limpaValoresEQuebras()" disabled>Limpiar valores</button>
+                                    <button type="button" id="btn_finalizar" class="btn btn-outline-dark" onclick="limpaValoresPoda()" disabled>Limpiar valores</button>
                                 </li>
                             </ul>
                         </div>
