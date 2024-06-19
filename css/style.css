@@ -156,3 +156,14 @@ a.sidebar-link {
         width: auto;
     }
 }
+
+canvas {
+    display: block;
+    margin: 0 auto;
+    border: 2px solid #6d6e6e; /* Blue border to match Bootstrap theme */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for better visual */
+    width: 1000px; /* Adjust width */
+    height: 800px; /* Adjust height */
+    background-color: #f8f9fa; /* Light background color */
+}

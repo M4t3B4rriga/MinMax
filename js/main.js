@@ -729,40 +729,50 @@ function drawpantalla(nodoList) {
 }
 
 function drawNodo(color) {
-	if (!color) {
-		color = "black"
-		fillstyle = "white";
-		firstfill = "rgb(160,160,160)";
-	} else {
-		fillstyle = "rgb(240,240,240)";
-		firstfill = color;
-	}
-	context.fillStyle = firstfill;
-	context.strokeStyle = color;
-	var y = this.nivel * (alturaNodo + espacioNivel) + 50;
-	context.beginPath();
-	context.arc(this.x, this.y, alturaNodo/2+2, 0, 2 * Math.PI, false);
-	context.fill();
-	context.closePath();
-	
-	context.fillStyle = fillstyle;
-	context.beginPath();
-	//context.strokeRect(this.x, y, anchoNodo, alturaNodo);
-	context.arc(this.x, this.y, alturaNodo/2, 0, 2 * Math.PI, false);
-	context.stroke();
-	context.fill();
-	context.closePath();
-	
-	if (this.valor != null) {
-		context.fillStyle = "blue";
-		context.font = "bold 13px 'Courier New'";
-		
-		var str = new String(this.valor);
-		var pxLetra = 8;
-		var larg = pxLetra * str.length;
-		
-		context.fillText(this.valor, this.x - larg/2, this.y + 4);
-	}
+    if (!color) {
+        color = "black";
+        fillstyle = "white";
+        firstfill = "rgb(160,160,160)";
+    } else {
+        fillstyle = "rgb(240,240,240)";
+        firstfill = color;
+    }
+    context.fillStyle = firstfill;
+    context.strokeStyle = color;
+    var y = this.nivel * (alturaNodo + espacioNivel) + 50;
+
+    // Draw a larger triangle instead of a circle
+    var side = alturaNodo * 1.5; // Increase size
+    var height = side * Math.sqrt(3) / 2;
+
+    context.beginPath();
+    if (this.nivel % 2 === 0) { // MAX node, normal triangle
+        context.moveTo(this.x, this.y - height / 2); // Top point
+        context.lineTo(this.x - side / 2, this.y + height / 2); // Bottom left point
+        context.lineTo(this.x + side / 2, this.y + height / 2); // Bottom right point
+    } else { // MIN node, inverted triangle
+        context.moveTo(this.x, this.y + height / 2); // Bottom point
+        context.lineTo(this.x - side / 2, this.y - height / 2); // Top left point
+        context.lineTo(this.x + side / 2, this.y - height / 2); // Top right point
+    }
+    context.closePath();
+    context.fill();
+    context.stroke();
+
+    context.fillStyle = fillstyle;
+    context.fill();
+    context.closePath();
+
+    if (this.valor != null) {
+        context.fillStyle = "blue";
+        context.font = "bold 13px 'Courier New'";
+
+        var str = new String(this.valor);
+        var pxLetra = 8;
+        var larg = pxLetra * str.length;
+
+        context.fillText(this.valor, this.x - larg / 2, this.y + 4);
+    }
 }
 
 
