@@ -385,7 +385,7 @@ function excluirNodo(pkNodo, alertar) {
 	if (!nodo.hijo.isEmpty()) {
 		var respuesta = true;
 		if (alertar) {
-			respuesta = confirm("Este nodo es hijo. Desea eliminar sus hijos? :'(");
+			respuesta = confirm("Se eliminara el nodo padre y sus hijos");
 		}
 		if (respuesta) {
 			while (nodo.hijo.length > 0) {
