@@ -507,6 +507,7 @@ function getEstadoActual(nodoActual) {
 }
 
 function crearMiniMax() {
+	document.getElementById("function-name-display").innerText = "MiniMax";
 	if (HojasCompletas()){
 		limpaValoresPoda();
 		ejecucion = new Array();
@@ -557,6 +558,7 @@ function minimax(nodo) {
 
 
 function crearPoda() {
+	document.getElementById("function-name-display").innerText = "Poda Alpha-Beta";
 	if (HojasCompletas()){
 		limpaValoresPoda();
 		ejecucion = new Array();

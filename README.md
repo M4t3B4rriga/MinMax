@@ -1,7 +1,8 @@
 # MiniMax - Alpha-Beta -Grp5
 
 Este proyecto es una visualización interactiva del algoritmo MiniMax y la poda Alpha-Beta en árboles de decisiones. Está construido con HTML, CSS, JavaScript, y utiliza la librería Bootstrap para el diseño y jQuery para la manipulación del DOM.
-
+# Tiempo de realización
+    2 semanas.
 ## Contenidos
 
 - [Instalación](#instalación)
